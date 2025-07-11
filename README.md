@@ -1,0 +1,1 @@
+# Esercizio_Gruppo_Con_Tutti_Pattern
