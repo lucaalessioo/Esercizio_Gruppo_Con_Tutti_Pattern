@@ -388,7 +388,7 @@ public class Application {
 
         socialFacade.performFullSocialWorkflow( "MarioRossi", "password123", "PREMIUM",  "Questo è il mio primo post sul nuovo social!", "Ottimo post Mario! Benvenuto!");
 
-        System.out.println("\n[Dimostrazione di operazioni singole tramite Facade]");
+        
         User user1 = socialFacade.loginUser("MarioRossi", "password123");
         if (user1 != null) {
             socialFacade.createNewPost(user1, "Un secondo post interessante!");
