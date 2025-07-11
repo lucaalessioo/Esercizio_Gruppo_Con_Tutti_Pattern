@@ -320,7 +320,7 @@ class SocialMediaFacade {
         // Se il post è stato trovato lo elimiamo altrimenti stampiamo non trovato
         if (postToRemove != null) {
             posts.remove(postToRemove);
-            System.out.println(" Post con ID " + postId + " eliminato.");
+            System.out.println("Post con ID " + postId + " eliminato.");
         } else {
             System.out.println("Post con ID " + postId + " non trovato per l'eliminazione.");
         }
@@ -336,9 +336,9 @@ class SocialMediaFacade {
 
     // Metodo per modificare un commento nel post
     public Comment modifyComment(Comment originalComment) {
-        System.out.println("\n[Facade]: Richiesta Modifica Commento");
+        System.out.println("\nRichiesta Modifica Commento");
         Comment modifiedComment = new DecoratoreConcreto(originalComment);
-        System.out.println("  [Facade]: Commento modificato: '" + originalComment.getText() + "'  '" + modifiedComment.getText() + "'");
+        System.out.println("Commento modificato: '" + originalComment.getText() + "'  '" + modifiedComment.getText() + "'");
         return modifiedComment;
     }
      
