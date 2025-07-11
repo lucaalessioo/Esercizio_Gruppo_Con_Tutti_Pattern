@@ -7,19 +7,21 @@ import java.util.List;
 public class TestPattern {
     
 }
-
+//product del factory
 interface User
 {
     void getUser();
     void getTipo();
 
 }
+
 //factory
 interface UserFactory
 {
     User creaUser(String type);
 }
-//concret user premium
+
+//classe concreta che implementa il product
 class PremiumUser implements User
 {
     private String username;
@@ -221,10 +223,11 @@ class SocialComment implements Comment { // Rinominata da BaseComment a SocialCo
         return super.getText() + " (Modificato)";
     }
  }
- class Post {
+ //creazione dei commenti, rimozione commenti e mostra commenti
+ /*class Post {
     private String contenuto;
     private List<Comment> commenti = new ArrayList<>();
-    private String foto=null;
+    
 
     public Post(String contenuto) {
         this.contenuto = contenuto;
@@ -254,26 +257,8 @@ class SocialComment implements Comment { // Rinominata da BaseComment a SocialCo
     public String getContenuto() {
         return contenuto;
     }
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-    public String getFoto() {
-        return foto;
-    }
-}
-// Decoratore per aggiungere emoticon
-class EmoticonDecorator extends CommentDecorator {
-    private String emoticon;
+ 
+}*/
 
-    public EmoticonDecorator(Comment comment, String emoticon) {
-        super(comment);
-        this.emoticon = emoticon;
-    }
-
-    @Override
-    public String getText() {
-        return decoratedComment.getText() + " " + emoticon;
-    }
-}
 
 
