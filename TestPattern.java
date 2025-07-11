@@ -1,6 +1,13 @@
+
+    
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestPattern {
     
 }
+
 interface User
 {
     void getUser();
@@ -15,6 +22,11 @@ interface UserFactory
 //concret user premium
 class PremiumUser implements User
 {
+    private String username;
+    PremiumUser(String username)
+    {
+        this.username=username;
+    }
  
 @Override
 public void getUser() {
@@ -28,10 +40,22 @@ public void getTipo() {
     
 }
 
+@Override
+public String toString() {
+    return username;
+}
+
+
+
 }
 //concreta classe normal user
 class NormalUser implements User
 {
+private String username;
+NormalUser(String username)
+{
+    this.username=username;
+}
 
     @Override
     public void getUser() {
@@ -45,22 +69,29 @@ class NormalUser implements User
         
     }
 
+    @Override
+    public String toString() {
+        return username;
+    }
+
 
 }
 //classe concreta Factory
-class ConcreteUser implements UserFactory {
+class ConcreteUserFactory implements UserFactory {
     @Override
     public User creaUser(String tipo) {
+        String defaultUsername = "utenteSconosciuto"; // O un nome utente dinamico dal contesto
+
         if (tipo.equalsIgnoreCase("premium")) {
-            return new PremiumUser();
-        } else if (tipo.equalsIgnoreCase("normale")) { // Aggiunta la condizione per "normale"
-            return new NormalUser();
+            return new PremiumUser(defaultUsername);
+        } else if (tipo.equalsIgnoreCase("normale")) {
+            return new NormalUser(defaultUsername);
         } else {
             System.out.println("Tipo utente non riconosciuto. Creazione di un utente normale di default.");
-            return new NormalUser(); // Gestione di tipi non validi
+            return new NormalUser(defaultUsername);
         }
     }
-   }
+}
 
 
 //singleton
@@ -75,7 +106,7 @@ private static AutenticatoreSingleton istanza;
 
     // Costruttore privato
     private AutenticatoreSingleton() {
-        this.userFactory = new ConcreteUser(); // Inizializza la factory qui
+        this.userFactory = new ConcreteUserFactory(); // Inizializza la factory qui
     }
 
     // Metodo per ottenere l'unica istanza
@@ -131,16 +162,32 @@ String getText();
 
 }
 
-class BaseComment implements Comment
-{
-private String text;
-public BaseComment(String text)
-{
-    this.text=text;
-}
-@Override
+class SocialComment implements Comment { // Rinominata da BaseComment a SocialComment per chiarezza nel dominio
+    private String text;
+    private User author;
+    private String postId; // A quale post appartiene il commento
+
+    public SocialComment(String text, User author, String postId) {
+        this.text = text;
+        this.author = author;
+        this.postId = postId;
+    }
+
+    @Override
     public String getText() {
         return text;
+    }
+
+    public User getauthor() {
+         return author; 
+        }
+    public String getPostId() {
+         return postId; 
+        }
+
+    @Override
+    public String toString() {
+        return "Commento [Autore: " + author.getClass().getSimpleName() + ", Testo: '" + getText() + "']";
     }
 }
 
@@ -174,6 +221,59 @@ public BaseComment(String text)
         return super.getText() + " (Modificato)";
     }
  }
+ class Post {
+    private String contenuto;
+    private List<Comment> commenti = new ArrayList<>();
+    private String foto=null;
 
+    public Post(String contenuto) {
+        this.contenuto = contenuto;
+    }
+
+    public void aggiungiCommento(Comment commento) {
+        commenti.add(commento);
+        System.out.println("Commento aggiunto: " + commento.getText());
+    }
+
+    public void rimuoviCommento(int indice) {
+        if (indice >= 0 && indice < commenti.size()) {
+            commenti.remove(indice);
+            System.out.println("Commento rimosso.");
+        } else {
+            System.out.println("Indice non valido.");
+        }
+    }
+
+    public void mostraCommenti() {
+        System.out.println("Commenti sul post:");
+        for (Comment c : commenti) {
+            System.out.println("- " + c.getText());
+        }
+    }
+
+    public String getContenuto() {
+        return contenuto;
+    }
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+    public String getFoto() {
+        return foto;
+    }
+}
+// Decoratore per aggiungere emoticon
+class EmoticonDecorator extends CommentDecorator {
+    private String emoticon;
+
+    public EmoticonDecorator(Comment comment, String emoticon) {
+        super(comment);
+        this.emoticon = emoticon;
+    }
+
+    @Override
+    public String getText() {
+        return decoratedComment.getText() + " " + emoticon;
+    }
+}
 
 
